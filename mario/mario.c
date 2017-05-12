@@ -36,7 +36,7 @@ int str_to_int(char s[]);
 
 int main(void)
 {
-    int i, len, val;
+    int i, j, len, val;
     char s[MAX_INPUT_LENGTH];
 
     len = get_input(s, MAX_INPUT_LENGTH);
@@ -48,7 +48,20 @@ int main(void)
         len = get_input(s, MAX_INPUT_LENGTH);
         val = str_to_int(s);
     }
-    
+
+    for (i = 0; i < val; i++)
+    {
+        for (j = 0; j < val; j++)
+        {
+            if (j + 1 < val - i)
+                putchar(' ');
+            if (j + 1 >= val - i)
+                putchar('#');
+
+            if (j + 1 == val)
+                putchar('\n');
+        }
+    }
     // i = 0;
     // while (s[i] != '\0')
     // {
