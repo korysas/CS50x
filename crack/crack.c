@@ -30,15 +30,15 @@ int main(int argc, char **argv)
     for (i = 'A'; i <= 'z'; i++)
     {
         if (i >= 91 && i <= 96) continue;
-        for (j = 'A'; j <= 'z'; j++)
+        for (j = '\0'; j <= 'z'; j++)
         {
-            if (j >= 91 && j <= 96) continue;
-            for (k = 'A'; k <= 'z'; k++)
+            if ((j >= 91 && j <= 96) || (j > '\0' && j < 'A')) continue;
+            for (k = '\0'; k <= 'z'; k++)
             {
-                if (k >= 91 && k <= 96) continue;
-                for (l = 'A'; l <= 'z'; l++)
+                if ((k >= 91 && k <= 96) || (k > '\0' && k < 'A')) continue;
+                for (l = '\0'; l <= 'z'; l++)
                 {
-                    if (l >= 91 && l <= 96) continue;
+                    if ((l >= 91 && l <= 96) || (l > '\0' && l < 'A')) continue;
                     pass_attempt[0] = i;
                     pass_attempt[1] = j;
                     pass_attempt[2] = k;
