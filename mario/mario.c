@@ -49,26 +49,40 @@ int main(void)
         val = str_to_int(s);
     }
 
+    int pyramid[val][val];
+
     for (i = 0; i < val; i++)
     {
         for (j = 0; j < val; j++)
         {
             if (j + 1 < val - i)
-                putchar(' ');
+                // putchar(' ');
+                pyramid[i][j] = ' ';
             if (j + 1 >= val - i)
-                putchar('#');
+                // putchar('#');
+                pyramid[i][j] = '#';
 
-            if (j + 1 == val)
-                putchar('\n');
+            // if (j + 1 == val)
+            //     putchar('\n');
         }
     }
-    // i = 0;
-    // while (s[i] != '\0')
-    // {
-    //     printf("%d, ", s[i]);
-    //     i++;
-    // }
-    // printf("\n");
+
+    for (i = 0; i < val; i++)
+    {
+        for (j = 0; j < val; j++)
+        {
+            putchar(pyramid[i][j]);
+        }
+
+        printf("  ");
+
+        for (j = val - 1; j >= 0; j--)
+        {
+            putchar(pyramid[i][j]);
+        }
+
+        putchar('\n');
+    }
 }
 
 int get_input(char s[], int max_length)
