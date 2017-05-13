@@ -2,9 +2,9 @@
     Program that attempts to crack a password
 
     We simplify this by assuming that the password:
-        1. has a length of 4
-        2. consits only of alphabetical chars (upper and lower)
-        3. has been hashed with crypt function
+        1. has a length of 4 or less
+        2. consists only of alphabetical chars (upper and lowercase)
+        3. has been hashed with linux crypt function
 */
 
 #define _XOPEN_SOURCE
@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     char salt[] = { '5', '0' };
 
     int i, j, k, l;
-    char *hash;
+    char hash[];
     char pass_attempt[5];
 
     for (i = 'A'; i <= 'z'; i++)
@@ -48,6 +48,7 @@ int main(int argc, char **argv)
                     printf("%s\n", pass_attempt);
 
                     hash = crypt(pass_attempt, salt);
+                    
                     // check if we have a match
                     if (strcmp(hash, argv[1]) == 0)
                     {
