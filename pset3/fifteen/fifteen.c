@@ -34,8 +34,9 @@ void clear(void);
 void greet(void);
 void init(int size, int gameboard[][size]);
 void draw(int size, int gameboard[][size]);
-bool move(int tile);
+bool move(int tile, int size, int gameboard[][size]);
 bool won(void);
+bool get_coords(int coords[], int value)
 
 int main(int argc, string argv[])
 {
@@ -205,10 +206,20 @@ void draw(int size, int gameboard[][size])
  * If tile borders empty space, moves tile and returns true, else
  * returns false. 
  */
-bool move(int tile)
+bool move(int tile, int size, int gameboard[][size])
 {
-    // TODO
-    return false;
+    // get the coordinates of this tile
+    int coords[2];
+    bool is_found = get_coords(coords, tile);
+
+    if (!is_found)
+        return false;
+
+    // check adjacent coordinates to see if there is empty space
+
+    // if there is empty space, make the swap and signify we have made the move
+
+    // if no empty space adjacent, it's an illegal move
 }
 
 /**
@@ -219,4 +230,13 @@ bool won(void)
 {
     // TODO
     return false;
+}
+
+/**
+ * Populates the input array with x and y coordinates where the specified value is found
+ * returns a boolean to signify if that value was found in the gameboard
+ */
+bool get_coords(int coords[], int value)
+{
+
 }
