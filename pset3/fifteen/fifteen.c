@@ -36,7 +36,8 @@ void init(int size, int gameboard[][size]);
 void draw(int size, int gameboard[][size]);
 bool move(int tile, int size, int gameboard[][size]);
 bool won(void);
-bool get_coords(int coords[], int value)
+bool get_coords(int size, int gameboard[][size], int coords[], int value);
+bool check_adjacent(int size, int gameboard[][size], int coords[]);
 
 int main(int argc, string argv[])
 {
@@ -116,7 +117,7 @@ int main(int argc, string argv[])
         fflush(file);
 
         // move if possible, else report illegality
-        if (!move(tile))
+        if (!move(tile, d, gameboard))
         {
             printf("\nIllegal move.\n");
             usleep(500000);
@@ -196,7 +197,7 @@ void draw(int size, int gameboard[][size])
             if (gameboard[i][j] != 0)
                 printf("%d\t", gameboard[i][j]);
             else
-                printf("_");
+                printf("_\t");
         }
         printf("\n\n");
     }
@@ -208,18 +209,33 @@ void draw(int size, int gameboard[][size])
  */
 bool move(int tile, int size, int gameboard[][size])
 {
+    // don't allow the user to move the blank tile
+    if (tile == 0)
+        return false;
+
     // get the coordinates of this tile
     int coords[2];
-    bool is_found = get_coords(coords, tile);
+    bool is_found = get_coords(size, gameboard, coords, tile);
 
     if (!is_found)
         return false;
 
     // check adjacent coordinates to see if there is empty space
+    int coord_to_move[2];
+    coord_to_move[0] = coords[0];
+    coord_to_move[1] = coords[1];
+    bool is_valid_move = check_adjacent(size, gameboard, coord_to_move);
 
     // if there is empty space, make the swap and signify we have made the move
+    if (is_valid_move)
+    {
+        gameboard[coord_to_move[0]][coord_to_move[1]] = tile;
+        gameboard[coords[0]][coords[1]] = 0;
+        return true;
+    }
 
     // if no empty space adjacent, it's an illegal move
+    return false;
 }
 
 /**
@@ -236,7 +252,67 @@ bool won(void)
  * Populates the input array with x and y coordinates where the specified value is found
  * returns a boolean to signify if that value was found in the gameboard
  */
-bool get_coords(int coords[], int value)
+bool get_coords(int size, int gameboard[][size], int coords[], int value)
 {
+    int i, j;
+    for (i = 0; i < size; i++)
+    {
+        for (j = 0; j < size; j++)
+        {
+            if (gameboard[i][j] == value)
+            {
+                // populate x and y coordinates into coords array
+                coords[0] = i;
+                coords[1] = j;
+                return true;
+            }
+        }
+    }
 
+    return false;
+}
+
+/**
+ * Checks the coordinate to the left, right, above, and below to see if we can
+ * move to one of these spots
+ */
+bool check_adjacent(int size, int gameboard[][size], int coords[])
+{
+    int x, y;
+    x = coords[0];
+    y = coords[1];
+
+    // check to the left
+    if (x - 1 >= 0 && gameboard[x - 1][y] == 0)
+    {
+        coords[0] = x - 1;
+        coords[1] = y;
+        return true;
+    }
+
+    // check above
+    if (y - 1 >= 0 && gameboard[x][y - 1] == 0)
+    {
+        coords[0] = x;
+        coords[1] = y - 1;
+        return true;
+    }
+
+    // check to the right
+    if (x + 1 < size && gameboard[x + 1][y] == 0)
+    {
+        coords[0] = x + 1;
+        coords[1] = y;
+        return true;
+    }
+
+    // check below
+    if (y + 1 < size && gameboard[x][y + 1] == 0)
+    {
+        coords[0] = x;
+        coords[1] = y + 1;
+        return true;
+    }
+
+    return false;
 }
