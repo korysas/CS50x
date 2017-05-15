@@ -1,4 +1,4 @@
-# C-programming-practice
+# CS50x Course
 Practice programs to improve C skills (follows CS50x)
 
 ### Installing CS50 libraries:
