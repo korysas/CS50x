@@ -1,5 +1,5 @@
 # C-programming-practice
-Practice programs to improve my C skills (follows CS50x)
+Practice programs to improve C skills (follows CS50x)
 
 ### Installing CS50 libraries:
 Some of the programs in this repository use code from CS50 libraries
