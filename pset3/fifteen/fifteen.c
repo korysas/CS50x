@@ -35,7 +35,7 @@ void greet(void);
 void init(int size, int gameboard[][size]);
 void draw(int size, int gameboard[][size]);
 bool move(int tile, int size, int gameboard[][size]);
-bool won(void);
+bool won(int size, int gameboard[][size]);
 bool get_coords(int size, int gameboard[][size], int coords[], int value);
 bool check_adjacent(int size, int gameboard[][size], int coords[]);
 
@@ -96,7 +96,7 @@ int main(int argc, string argv[])
         fflush(file);
 
         // check for win
-        if (won())
+        if (won(d, gameboard))
         {
             printf("ftw!\n");
             break;
@@ -148,7 +148,7 @@ void clear(void)
  */
 void greet(void)
 {
-    clear();
+    //clear();
     printf("WELCOME TO GAME OF FIFTEEN\n");
     usleep(2000000);
 }
@@ -181,6 +181,20 @@ void init(int size, int gameboard[][size])
         gameboard[size - 1][size - 2] = gameboard[size - 1][size - 3];
         gameboard[size - 1][size - 3] = temp;
     }
+
+    // debug purposes to test the win function
+    // value = 1;
+    // for (i = 0; i < size; i++)
+    // {
+    //     for (j = 0; j < size; j++)
+    //     {
+    //         gameboard[i][j] = value++;
+    //     }
+    // }
+
+    // int temp = gameboard[size - 1][size - 2];
+    // gameboard[size - 1][size - 2] = 0;
+    // gameboard[size - 1][size - 1] = temp;
 }
 
 /**
@@ -195,9 +209,9 @@ void draw(int size, int gameboard[][size])
         for (j = 0; j < size; j++)
         {
             if (gameboard[i][j] != 0)
-                printf("%d\t", gameboard[i][j]);
+                printf("%d   ", gameboard[i][j]);
             else
-                printf("_\t");
+                printf("_   ");
         }
         printf("\n\n");
     }
@@ -242,10 +256,29 @@ bool move(int tile, int size, int gameboard[][size])
  * Returns true if game is won (i.e., board is in winning configuration), 
  * else false.
  */
-bool won(void)
+bool won(int size, int gameboard[][size])
 {
-    // TODO
-    return false;
+    int i, j;
+    int value = 1;
+    // check if everything is in order
+    for (i = 0; i < size; i++)
+    {
+        for (j = 0; j < size; j++)
+        {
+            if (i == size - 1 && j == size - 1 && gameboard[i][j] == 0)
+                return true;
+
+            // printf("value: %d, board: %d\n", value, gameboard[i][j]);
+            if (value != gameboard[i][j])
+                return false;
+            value++;
+        }
+    }
+
+    if (gameboard[size - 1][size - 1] != 0)
+        return false;
+
+    return true;
 }
 
 /**
