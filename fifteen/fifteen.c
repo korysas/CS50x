@@ -33,7 +33,7 @@ int d;
 void clear(void);
 void greet(void);
 void init(int size, int gameboard[][size]);
-void draw(void);
+void draw(int size, int gameboard[][size]);
 bool move(int tile);
 bool won(void);
 
@@ -76,7 +76,7 @@ int main(int argc, string argv[])
         clear();
 
         // draw the current state of the board
-        draw();
+        draw(d, gameboard);
 
         // log the current state of the board (for testing)
         for (int i = 0; i < d; i++)
@@ -172,28 +172,33 @@ void init(int size, int gameboard[][size])
         }
     }
 
-    // switch value of 1 and 2 in order to make to puzzle solvable
-    int temp = gameboard[size - 1][size - 2];
-    gameboard[size - 1][size - 2] = gameboard[size - 1][size - 3];
-    gameboard[size - 1][size - 3] = temp;
-
-    // debug purposes, print the gameboard 2D array
-    for (i = 0; i < size; i++)
+    // switch value of 1 and 2 in order to make to puzzle solvable if odd number of tiles
+    if (size % 2 == 0)
     {
-        for (j = 0; j < size; j++)
-        {
-            printf("%d\t", gameboard[i][j]);
-        }
-        printf("\n");
+        int temp = gameboard[size - 1][size - 2];
+        gameboard[size - 1][size - 2] = gameboard[size - 1][size - 3];
+        gameboard[size - 1][size - 3] = temp;
     }
 }
 
 /**
  * Prints the board in its current state.
  */
-void draw(void)
+void draw(int size, int gameboard[][size])
 {
-    // TODO
+    int i, j;
+
+    for (i = 0; i < size; i++)
+    {
+        for (j = 0; j < size; j++)
+        {
+            if (gameboard[i][j] != 0)
+                printf("%d\t", gameboard[i][j]);
+            else
+                printf("_");
+        }
+        printf("\n\n");
+    }
 }
 
 /**
