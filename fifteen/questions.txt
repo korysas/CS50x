@@ -1,0 +1,4 @@
+0. The framework allows dimensions from 3 to 9 inclusive
+1. The gameboard is represented with a 2d array
+2. The greet() function is called to greet the player at the start of the game
+3. init(), draw(), move(), and won() are the functions to be implemented
