@@ -1,0 +1,35 @@
+1.  stdint.h provides a set of typedefs that specify the exact widths
+    of integer types. 
+
+2.  using the different bit widths we can exactly align to the format of
+    the bitmap file strucutre
+
+3.  BYTE    = 8 bits
+    DWORD   = 32-bit unsigned integer  
+    LONG    = 32-bit signed integer
+    WORD    = 16-but unsigned integer
+
+4.  the first two bytes of a bmp file is the bfType, must be BM
+
+5.  bfSize is the size in bytes of the bitmap file. biSize is the size
+    of the bit map info header (biSize is contant 40 bytes)
+
+6.  if biHeight is negative the bitmpa is a top-down bitmap with
+    the origin at the top left. If postive then origin is at the 
+    lower left corner.
+
+7.  biBitCount specifies the number of bits per pixel.
+
+8.  Upon success fopen() returns a FILE pointer, otherwise NULL is
+    returned
+
+9.  The third argument to fread() is one becasue we only want to
+    read once the size specified in the second argument.
+
+10. Line 65 in copy.c assigns 3 to the variable padding
+
+11. fseek() function sets the file position for the stream pointed
+    to by the stream.
+
+12. when SEEK_CUR is set, the offset is relative to the 
+    current position indicator.
