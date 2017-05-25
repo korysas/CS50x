@@ -52,6 +52,13 @@ int main(int argc, char *argv[])
                 fclose(img);
                 sprintf(filename, "%03i.jpg", no_jpegs_found);
                 img = fopen(filename, "w");
+                if (img == NULL)
+                {
+                    fprintf(stderr, "Could not open %s\n", filename);
+                    return 2;
+                }
+
+                fwrite(&buffer, 1, 512, img);
             }
             else
             {
@@ -60,6 +67,14 @@ int main(int argc, char *argv[])
                 sprintf(filename, "%03i.jpg", no_jpegs_found);
                 printf("creating: %s\n", filename);
                 img = fopen(filename, "w");
+                if (img == NULL)
+                {
+                    fprintf(stderr, "Could not open %s\n", filename);
+                    return 2;
+                }
+
+                fwrite(&buffer, 1, 512, img);
+
                 is_jpeg_found = true;
             }
         }
