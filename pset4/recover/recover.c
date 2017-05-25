@@ -24,17 +24,17 @@ int main(int argc, char *argv[])
 
     int bytes_read;
     uint8_t buffer[512];
-    int no_jpegs_found = 0;
+    int no_jpegs_found = -1;
     char filename[100];
     bool is_jpeg_found = false;
     FILE *img;
-    while ((bytes_read = fread(buffer, 1, 512, inptr)) == 512)
+    while ((bytes_read = fread(&buffer, 1, 512, inptr)) == 512)
     {
-        printf("%d\n", buffer[0]);
-        printf("%d\n", buffer[1]);
-        printf("%d\n", buffer[2]);
-        printf("%d\n", buffer[3]);
-        printf("\n");
+        // printf("%d\n", buffer[0]);
+        // printf("%d\n", buffer[1]);
+        // printf("%d\n", buffer[2]);
+        // printf("%d\n", buffer[3]);
+        // printf("\n");
 
         // start of a jpeg
         if (buffer[0] == 0xff &&
@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
             buffer[2] == 0xff &&
             (buffer[3] & 0xf0) == 0xe0)
         {
+            no_jpegs_found++;
             printf("Found a jpeg!\n");
             printf("jpegs found: %d\n", no_jpegs_found);
 
@@ -49,7 +50,6 @@ int main(int argc, char *argv[])
             {
                 // close out previous jpeg and start a new one
                 fclose(img);
-                printf("%d", no_jpegs_found);
                 sprintf(filename, "%03i.jpg", no_jpegs_found);
                 img = fopen(filename, "w");
             }
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
             {
                 // start of the first jpeg
                 printf("Found first jpeg!\n");
-                sprintf(filename, "%d.jpg", no_jpegs_found);
+                sprintf(filename, "%03i.jpg", no_jpegs_found);
                 printf("creating: %s\n", filename);
                 img = fopen(filename, "w");
                 is_jpeg_found = true;
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
             if (is_jpeg_found)
             {
                 // add to the currently open jpeg file
-                fwrite(buffer, 512, 1, img);
+                fwrite(&buffer, 1, 512, img);
             }
         }
     }
