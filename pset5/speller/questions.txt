@@ -1,7 +1,17 @@
-0.  TODO
-1.  TODO
-2.  TODO
-3.  TODO
+0.  pneumonoultramicroscopicsilicovolcanoconiosis is the largest word in the English language
+    that is published in a dictionary
+
+1.  getrusage() returns information descrigin the resources utilized by the currect process, or
+    all its terminated child processes.
+
+2.  the rusage struct has 16 members
+
+3.  beacuse it's a struct, so it's easier to pass in a pointer to the start of a struct rather
+    than a copy of the entire struct. It can can be more efficient because we don't have
+    to copy the whole struct.
+
 4.  TODO
+
 5.  TODO
+
 6.  TODO
