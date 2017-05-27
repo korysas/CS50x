@@ -1,5 +1,5 @@
 # CS50x Course
-Practice programs to improve C skills (follows CS50x)
+Practice programs to improve computer science fundamentals and to improve C programming skills.
 
 ### Installing CS50 libraries:
 Some of the programs in this repository use code from CS50 libraries
