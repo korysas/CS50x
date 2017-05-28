@@ -10,7 +10,8 @@
     than a copy of the entire struct. It can can be more efficient because we don't have
     to copy the whole struct.
 
-4.  TODO
+4.  The for-loop iterates through the entire text character by character until EOF is reached.
+    First we check to see if the incoming character is a
 
 5.  TODO
 
