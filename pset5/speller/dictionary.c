@@ -10,14 +10,15 @@
 #include "dictionary.h"
 
 // global root
-TrieNode *trie_root = { .is_word = false, .nodes = { NULL } };
+TrieNode *trie_root;
+// = { .is_word = false, .nodes = { NULL } };
 
 /**
  * Returns true if word is in dictionary else false.
  */
 bool check(const char *word)
 {
-    TrieNode *current_node = &trie_root;
+    TrieNode *current_node = trie_root;
     while (*word != '\0')
     {
 
@@ -52,6 +53,21 @@ bool check(const char *word)
  */
 bool load(const char *dictionary)
 {
+    // define trie_root
+    trie_root = malloc(sizeof(TrieNode));
+    if (trie_root == NULL)
+    {
+        printf("Could not create trie root node");
+        return false;
+    }
+    
+    trie_root->is_word = false;
+
+    for (int i = 0; i < 27; i++)
+    {
+        trie_root->nodes[i] = NULL;
+    }
+
     // open file by the filename that is passed in
     FILE *fp = fopen(dictionary, "r");
     if (fp == NULL)
@@ -65,7 +81,7 @@ bool load(const char *dictionary)
     // iterate through all characters in the dictionary file
     for (int c = fgetc(fp); c != EOF; c = fgetc(fp))
     {
-        current_node = &trie_root;
+        current_node = trie_root;
 
         while (isalpha(c) || c == '\'')
         {
@@ -111,6 +127,8 @@ bool load(const char *dictionary)
         current_node->is_word = true;
     }
 
+    fclose(fp);
+
     return true;
 }
 
@@ -120,8 +138,32 @@ bool load(const char *dictionary)
  */
 unsigned int size(void)
 {
-    // TODO
-    return 0;
+    int size = 0;
+    _size(&size, trie_root);
+
+    return size;
+}
+
+/**
+ * private helper function that recursively traverses trie
+ * and determines the valid words in the trie
+ */
+void _size(int *size, TrieNode *node)
+{
+    if (node->is_word == true)
+    {
+        *size += 1;
+    }
+
+    for (int i = 0; i < 27; i++)
+    {
+        if (node->nodes[i] != NULL)
+        {
+            _size(size, node->nodes[i]);
+        }
+    }
+
+    return;
 }
 
 /**
@@ -129,7 +171,7 @@ unsigned int size(void)
  */
 bool unload(void)
 {
-    return _unload(&trie_root);
+    return _unload(trie_root);
 }
 
 /**
@@ -147,6 +189,6 @@ bool _unload(TrieNode *node)
     }
 
     printf("free node\n");
-    // free(node);
+    free(node);
     return true;
 }

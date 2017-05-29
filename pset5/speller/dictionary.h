@@ -39,4 +39,10 @@ bool unload(void);
  */
 bool _unload(TrieNode *node);
 
+/**
+ * private helper function that recursively traverses trie
+ * and determines the valid words in the trie
+ */
+void _size(int *size, TrieNode *node);
+
 #endif // DICTIONARY_H
