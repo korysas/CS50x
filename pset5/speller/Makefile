@@ -8,7 +8,7 @@ CFLAGS = -ggdb3 -O0 -Qunused-arguments -std=c11 -Wall -Werror
 EXE = speller
 
 # space-separated list of header files
-HDRS = dictionary.h
+HDRS = dictionary.h trie.h
 
 # space-separated list of libraries, if any,
 # each of which should be prefixed with -l

@@ -7,6 +7,8 @@
 
 #include <stdbool.h>
 
+#include "trie.h"
+
 // maximum length for a word
 // (e.g., pneumonoultramicroscopicsilicovolcanoconiosis)
 #define LENGTH 45
@@ -30,5 +32,11 @@ unsigned int size(void);
  * Unloads dictionary from memory.  Returns true if successful else false.
  */
 bool unload(void);
+
+/**
+ * private helper function that recursively implements unload
+ * to free any memory alloacted via malloc
+ */
+bool _unload(TrieNode *node);
 
 #endif // DICTIONARY_H

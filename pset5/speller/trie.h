@@ -5,6 +5,10 @@
  * and each node holds the letters traversed in
  * order to arrive at this node.
  */
+#ifndef TRIE_H
+#define TRIE_H
+
+#include <stdbool.h>
 
 typedef struct TrieNode
 {
@@ -13,4 +17,4 @@ typedef struct TrieNode
 }
 TrieNode;
 
-TrieNode trie_root = { .is_word = false, .nodes = { NULL } };
+#endif // TRIE_H

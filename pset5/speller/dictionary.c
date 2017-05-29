@@ -9,6 +9,9 @@
 #include "trie.h"
 #include "dictionary.h"
 
+// global root
+TrieNode *trie_root = { .is_word = false, .nodes = { NULL } };
+
 /**
  * Returns true if word is in dictionary else false.
  */
@@ -126,5 +129,24 @@ unsigned int size(void)
  */
 bool unload(void)
 {
-    if ()
+    return _unload(&trie_root);
+}
+
+/**
+ * private helper function that recursively implements unload
+ * to free any memory alloacted via malloc
+ */
+bool _unload(TrieNode *node)
+{
+    for (int i = 0; i < 27; i++)
+    {
+        if (node->nodes[i] != NULL)
+        {
+            _unload(node->nodes[i]);
+        }
+    }
+
+    printf("free node\n");
+    // free(node);
+    return true;
 }
