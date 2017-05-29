@@ -91,7 +91,7 @@ bool load(const char *dictionary)
             if (c == '\'')
                 c = c - '\'';
 
-            printf("at char: %d\n", c);
+            // printf("at char: %d\n", c);
 
             // path does not exist yet
             if (current_node->nodes[c] == NULL)
@@ -114,7 +114,7 @@ bool load(const char *dictionary)
                 current_node->nodes[c] = new_node;
                 
                 // debug purposes
-                printf("Created new node\n");
+                // printf("Created new node\n");
             }
 
             // traverse through that path
@@ -123,7 +123,7 @@ bool load(const char *dictionary)
             c = fgetc(fp);
         }
 
-        printf("reached end of word\n");
+        // printf("reached end of word\n");
         current_node->is_word = true;
     }
 
@@ -188,7 +188,7 @@ bool _unload(TrieNode *node)
         }
     }
 
-    printf("free node\n");
+    // printf("free node\n");
     free(node);
     return true;
 }
