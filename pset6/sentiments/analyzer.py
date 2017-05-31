@@ -1,4 +1,4 @@
-import nltk
+from nltk.tokenize import TweetTokenizer
 
 class Analyzer():
     """Implements sentiment analysis."""
@@ -6,10 +6,29 @@ class Analyzer():
     def __init__(self, positives, negatives):
         """Initialize Analyzer."""
 
-        # TODO
+        self.positives = set()
+        self.negatives = set()
+
+        with open(positives) as infile:
+            for line in infile:
+                if line[0] != ';' and line != '':
+                    self.positives.add(line.strip())
+
+        with open(negatives) as infile:
+            for line in infile:
+                if line[0] != ';' and line != '':
+                    self.negatives.add(line.strip())
 
     def analyze(self, text):
         """Analyze text for sentiment, returning its score."""
 
-        # TODO
-        return 0
+        tokenizer = TweetTokenizer()
+
+        score = 0
+
+        tweet = tokenizer.tokenize(text)
+        for word in tweet:
+            if word in self.positives:
+                score += 1
+            if word in self.negatives:
+                score -= 1
