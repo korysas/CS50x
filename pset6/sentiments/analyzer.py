@@ -26,9 +26,11 @@ class Analyzer():
 
         score = 0
 
-        tweet = tokenizer.tokenize(text)
+        tweet = tokenizer.tokenize(text.lower())
         for word in tweet:
             if word in self.positives:
                 score += 1
             if word in self.negatives:
                 score -= 1
+
+        return score
